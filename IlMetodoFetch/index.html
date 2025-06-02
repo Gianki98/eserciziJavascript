@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Il signore degli anelli</h1>
+    <p>Nome Personaggio: <span class="pg-name"></span></p>
+    <img class="pg-img" src="" alt="Foto del Personaggio" />
+
+    <script>
+      const cardCodes = [
+        "01001", // Aragorn
+        "01002", // Legolas
+        "01003", // Gimli
+        "01004", // Denethor
+        "01005", // Eleanor
+        "01006", // Eowyn
+        "01007", // Theodred
+        "01008", // Glorfindel
+        "01009", // Gloin
+        "01012", // Gandalf
+        "02001", // Boromir
+        "02002", // Faramir
+        "02003", // Bard the Bowman
+        "02004", // Bilbo Baggins
+        "02005", // Dain Ironfoot
+      ];
+      const randomCard= cardCodes[Math.floor(Math.random()* cardCodes.length)]
+      const url = `https://ringsdb.com/api/public/card/${randomCard}`;
+      async function fetchApi() {
+        try {
+          const cards = await fetch(url);
+          const cardsJson = await cards.json();
+          const card = cardsJson;
+          const imgUrl = `https://ringsdb.com${card.imagesrc}`;
+          const span = document.querySelector(".pg-name");
+          const img = document.querySelector(".pg-img");
+
+          span.innerText = card.name;
+          img.setAttribute("src", imgUrl);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchApi();
+    </script>
+  </body>
+</html>
